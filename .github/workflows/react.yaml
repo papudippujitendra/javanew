@@ -34,14 +34,13 @@ jobs:
 
     # 4. Run SonarQube Analysis
     - name: SonarQube Scan
-      uses: sonarsource/sonarcloud-github-action@master
+      uses: SonarSource/sonarqube-scan-action@v5.0.0
       with:
-        projectBaseDir: .
-        sonarToken: ${{ secrets.SONAR_AUTH_TOKEN }}
-        extraProperties: |
-          sonar.projectKey=javanew
-          sonar.sources=src
-          sonar.host.url=${{ env.SONAR_HOST_URL }}
+        args: >
+          -Dsonar.projectKey=javanew
+          -Dsonar.sources=src
+          -Dsonar.host.url=${{ env.SONAR_HOST_URL }}
+          -Dsonar.login=${{ secrets.SONAR_AUTH_TOKEN }}
 
     # 5. Zip build folder
     - name: Zip Build
