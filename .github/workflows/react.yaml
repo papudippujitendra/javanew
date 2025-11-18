@@ -68,17 +68,17 @@ jobs:
       # 9. Build Docker image
       - name: Build Docker Image
         run: |
-          docker build -t $DOCKER_USERNAME/myreactapp:${{ github.run_number }} .
-          docker tag $DOCKER_USERNAME/myreactapp:${{ github.run_number }} $DOCKER_USERNAME/myreactapp:${{ github.run_number }}
+          docker build -t $DOCKERHUB_USERNAME/myreactapp:${{ github.run_number }} .
+          docker tag $DOCKERHUB_USERNAME/myreactapp:${{ github.run_number }} $DOCKERHUB_USERNAME/myreactapp:latest
 
       # 10. Push Docker image to DockerHub
       - name: Push Docker Image
         run: |
-          docker push $DOCKER_USERNAME/myreactapp:${{ github.run_number }}
-          docker push $DOCKER_USERNAME/myreactapp:latest
+          docker push $DOCKERHUB_USERNAME/myreactapp:${{ github.run_number }}
+          docker push $DOCKERHUB_USERNAME/myreactapp:latest
 
       # 11. Run container for verification (optional)
       - name: Run Docker Container
         run: |
           docker rm -f react-app || true
-          docker run -d --name react-app -p 80:80 $DOCKER_USER/myreactapp:latest
+          docker run -d --name react-app -p 80:80 $DOCKERHUB_USERNAME/myreactapp:latest
